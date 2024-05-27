@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1>Investments</h1>
+    <ul>
+        {% for investment in investments%}
+        <li>{{ investment.data.title }} {{ investment.data.date }}</li>
+        
+        <ul>
+            <li> INVESTMENTS: {{investment.data.data}}</li>
+        </ul>
+        {% endfor %}
+    </ul>
+</body>
+</html>
