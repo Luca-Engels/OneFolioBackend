@@ -29,10 +29,9 @@ def user_view(request):
 def user_list(request):
     if request.method == 'GET':
         users = list(users_collection.find())
-        print(users)
         return JsonResponse([obj_user_to_json(user) for user in users], safe=False)
     elif request.method == 'POST':
-        data = json.loads(request.body)
+        data= json.loads(request.body)
         users_collection.insert_one(data)
         return HttpResponse(status=201)
 
@@ -73,12 +72,13 @@ def investment_view(request):
 
 @csrf_exempt
 def investment_list(request):
+    print(request.body)
     if request.method == 'GET':
         investments = list(investments_collection.find())
-        print(investments)
         return JsonResponse([obj_investment_to_json(investment) for investment in investments], safe=False)
     elif request.method == 'POST':
         data = json.loads(request.body)
+        data["userId"] = ObjectId(data["userId"])
         investments_collection.insert_one(data)
         return HttpResponse(status=201)
 
@@ -87,9 +87,7 @@ def investment_list(request):
 @csrf_exempt
 def investments_by_user(request, user_id):
     if request.method == 'GET':
-        print(user_id)
         investments = list(investments_collection.find({"userId": ObjectId(user_id)}))
-        print(investments)
         return JsonResponse([obj_investment_to_json(investment) for investment in investments], safe=False)
 
 @csrf_exempt
