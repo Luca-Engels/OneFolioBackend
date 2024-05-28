@@ -7,6 +7,7 @@ urlpatterns = [
     path('users/', views.user_list, name='user_list'),
     path('users/<str:user_id>/', views.user_detail, name='user_detail'),
     path('users/email/<str:email>/', views.user_by_email, name='user_by_email'),
+    path('users/investments/<str:user_id>/', views.investments_by_user, name='investments_by_user'),
     
     # Investment endpoints
     path('investments/', views.investment_list, name='investment_list'),
