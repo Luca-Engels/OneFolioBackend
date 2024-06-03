@@ -1,13 +1,20 @@
 {
-    "builds": [{
-        "src": "OneFolioBackend/wsgi.py",
+    "version": 2,
+    "builds": [
+      {
+        "src": "OneFolioBackend/OneFolioBackend/wsgi.py",
         "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
-    }],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "OneFolioBackend/wsgi.py"
+        "config": {
+          "maxLambdaSize": "15mb",
+          "runtime": "python3.12"
         }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "OneFolioBackend/OneFolioBackend/wsgi.py"
+      }
     ]
-}
+  }
+  

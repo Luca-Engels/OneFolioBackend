@@ -25,7 +25,7 @@ jobs:
 
     - name: Run tests
       run: |
-        python OneFolioBackend/manage.py test
+        python manage.py test
 
   deploy:
     needs: build
