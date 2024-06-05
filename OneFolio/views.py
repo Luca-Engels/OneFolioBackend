@@ -81,6 +81,19 @@ def investment_list(request):
         data["userId"] = ObjectId(data["userId"])
         investments_collection.insert_one(data)
         return HttpResponse(status=201)
+    
+@csrf_exempt
+def investment_list_many(request):
+    print(request.body)
+    if request.method == 'GET':
+        investments = list(investments_collection.find())
+        return JsonResponse([obj_investment_to_json(investment) for investment in investments], safe=False)
+    elif request.method == 'POST':
+        datas = json.loads(request.body)
+        for data in datas:
+            data["userId"] = ObjectId(data["userId"])
+        investments_collection.insert_many(datas)
+        return HttpResponse(status=201)
 
     
 # User CRUD operations
