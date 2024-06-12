@@ -13,4 +13,8 @@ urlpatterns = [
     path('investments/', views.investment_list, name='investment_list'),
     path('investments/addMany', views.investment_list_many, name='investment_list_many'),
     path('investments/<str:investment_id>/', views.investment_detail, name='investment_detail'),
+
+    #API Banking
+    path('users/<str:user_id>/cursor', views.cursor_detail, name='cursor_detail'),
+
 ]

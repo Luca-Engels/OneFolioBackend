@@ -1,9 +1,11 @@
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 from django.shortcuts import render
 import json
 from bson import ObjectId
 from .mongodb import users_collection, investments_collection
+
 
 # Utility function to convert ObjectId to string
 def obj_user_to_json(obj):
@@ -46,7 +48,15 @@ def user_detail(request, user_id):
     elif request.method == 'PUT':
         data = json.loads(request.body)
         users_collection.update_one({"_id": ObjectId(user_id)}, {"$set": data})
-        return HttpResponse(status=204)
+        user = users_collection.find_one({"_id": ObjectId(user_id)})
+        return JsonResponse(obj_user_to_json(user))
+    
+    elif request.method == 'PATCH':
+        data = json.loads(request.body)
+        users_collection.update_one({"_id": ObjectId(user_id)}, {"$unset": data})
+        user = users_collection.find_one({"_id": ObjectId(user_id)})
+        return JsonResponse(obj_user_to_json(user))
+        
     elif request.method == 'DELETE':
         users_collection.delete_one({"_id": ObjectId(user_id)})
         return HttpResponse(status=204)
@@ -118,3 +128,13 @@ def investment_detail(request, investment_id):
     elif request.method == 'DELETE':
         investments_collection.delete_one({"_id": ObjectId(investment_id)})
         return HttpResponse(status=204)
+
+@csrf_exempt
+def cursor_detail(request,user_id):
+    if request.method == 'GET':
+        user = users_collection.find_one({"_id": ObjectId(user_id)})
+        if user:
+            cursor = user.get('cursor', None)
+            return JsonResponse(cursor, safe=False)
+        else:
+            return HttpResponse(status=404)
