@@ -43,10 +43,10 @@ INSTALLED_APPS = [
     'OneFolio',
 ]
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # <-- Move this line to the top
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -55,10 +55,10 @@ MIDDLEWARE = [
 
 # For production, you should specify allowed origins like this:
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'https://app.onefolio.de',
-    'https://www.onefolio.de',
+    "http://localhost:3000",
+    "https://app.onefolio.de",
+    "https://www.onefolio.de",
+    "https://onefolio.de",
 ]
 
 ROOT_URLCONF = 'OneFolioBackend.urls'
